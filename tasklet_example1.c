@@ -19,15 +19,7 @@ void gpio_toggle_pin(int l)
 // local general purpose tasklet wait context
 struct TLWaitContext waitonme;
 
-/*
-  timer interrupt routine
- */ 
-INTERRUPT void isr_SYSTICK_Handler(void)
-{
-	// tasklet engine needs is tick on a regular basis.
-	// this is simply done 
-	isr_tasklet_tick();
-}
+
 
 INTERRUPT void isr_gpio(void)
 {
@@ -67,9 +59,8 @@ TASKLET_END
 
 TASKLET_INSTANCE(blinkytask) heartbeat1;
 TASKLET_INSTANCE(blinkytask) heartbeat2;
-//TASKLET_INSTANCE(mytaskA) buttontask1;
 
-int main(void){
+int tasklet_main(void){
 	SYSTEM_INIT(); // <- initalize board, system, etc... setup timers, irq handlers, etc...
 
 	tasklet_init(&heartbeat1, &blinkytask);

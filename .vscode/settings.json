@@ -5,6 +5,7 @@
     "cmake.sourceDirectory": "/home/nick/src/NSETL",
     "files.associations": {
         "linkedlist.h": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "tasklet.h": "c"
     }
 }

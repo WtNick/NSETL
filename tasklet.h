@@ -1,7 +1,4 @@
-/*
-	Nick's Super Easy Tasklet Library
-	---------------------------------
-	
+/*	
 	This library allows for super easy creation of co-routines style tasks
 	a task class is defined as follows:
 	
