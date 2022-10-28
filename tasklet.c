@@ -1,10 +1,6 @@
-/*
-	Nick's Super Easy Tasklet Library
-	---------------------------------
-	
-*/
 
-#include <tasklet.h>
+
+#include "tasklet.h"
 
 static struct DLList readylist;
 static struct CSLList timeoutcontextlist;
@@ -103,7 +99,7 @@ void __tasklet_sleep(struct TaskLet* tl, int timeout){
 	__tasklet_waiton(tl, &sleepcontext, timeout);
 }
 
-void _tasklet_destroy(struct TaskLet* tl)
+void __tasklet_destroy(struct TaskLet* tl)
 {
 	// Nothing yet 
 }
@@ -232,7 +228,7 @@ int tasklet_process(void){
 
 	struct TLWaitContext* waitcontext;
 	while(waitcontext = ATOM_defqueue_pop()){
-		tasklet_ReleaseAll(waitcontext);
+		tasklet_releaseall(waitcontext);
 	}
 	
 	while(lasttick - processedtick > 0){

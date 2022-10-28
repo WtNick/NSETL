@@ -53,6 +53,7 @@
 #define _LINKEDLIST_H_
 
 #include "arch.h"
+#include <stddef.h>
 
 
 // 1 indicates that dangling pointers are automatically cleared

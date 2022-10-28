@@ -36,8 +36,7 @@ extern "C" {
 #ifndef _TASKLET_H_
 #define _TASKLET_H_
 
-#include <arch.h>
-#include <linkedlist.h>
+#include "linkedlist.h"
 
 struct TLWaitContext
 {
@@ -49,16 +48,16 @@ struct TLWaitContext
 
 struct TaskLet;
 struct _TaskLetClass;
-void _tasklet_destroy(struct TaskLet* tl);
+void __tasklet_destroy(struct TaskLet* tl);
 
 #define TASKLET(taskname) struct _TaskLetClass taskname
 #define TASKLET_DEFINE(taskname, argname) \
 __TASKLET_INSTANCE_DEF(taskname);\
 struct _TaskLetClass taskname;static __TASKENTRYPROTO(taskname); __TASKLET_CLASS(taskname);__TASKLET_LOCALFRAMETYPE(taskname){argname;
 #define TASKLET_BEGIN(taskname) };static __TASKENTRYPROTO(taskname){__TASKLET_LOCALFRAMETYPE(taskname)* __TASKLET_LOCALFRAMENAME = (__TASKLET_LOCALFRAMETYPE(taskname)*)&__tl->arg;switch(__tl->state){case 0:
-#define TASKLET_AWAIT(context) _tasklet_waiton(__tl, context, 0);__tl->state = __LINE__;return NULL;case __LINE__:
-#define TASKLET_AWAIT_TIMEOUT(context, timeout) _tasklet_waiton(__tl, context, timeout);__tl->state = __LINE__;return NULL;case __LINE__:
-#define TASKLET_SLEEP(timeout) _tasklet_sleep(__tl, timeout);__tl->state = __LINE__;return NULL;case __LINE__:
+#define TASKLET_AWAIT(context) __tasklet_waiton(__tl, context, 0);__tl->state = __LINE__;return NULL;case __LINE__:
+#define TASKLET_AWAIT_TIMEOUT(context, timeout) __tasklet_waiton(__tl, context, timeout);__tl->state = __LINE__;return NULL;case __LINE__:
+#define TASKLET_SLEEP(timeout) __tasklet_sleep(__tl, timeout);__tl->state = __LINE__;return NULL;case __LINE__:
 #define TASKLET_INVOKE(taskname, arg) __tl->state = __LINE__;return _tasklet_call(__tl, &taskname, arg);case __LINE__:
 #define TASKLET_YIELD()  __tl->state = __LINE__;return NULL;case __LINE__:
 #define TASKLET_END }__TASKEXIT;}
@@ -69,7 +68,7 @@ struct _TaskLetClass taskname;static __TASKENTRYPROTO(taskname); __TASKLET_CLASS
 #define __TASKENTRYPOINT(taskname) _task_## taskname ## _entrypoint
 #define __TASKENTRYPROTO(taskname) struct TaskLet* __TASKENTRYPOINT(taskname)(struct TaskLet* __tl)
 #define __TASKLET_CLASS(taskname) struct _TaskLetClass taskname ={.EntryPoint = __TASKENTRYPOINT(taskname)}
-#define __TASKEXIT {struct TaskLet* exittask = __tl->exitto;_tasklet_destroy(__tl);return exittask;}
+#define __TASKEXIT {struct TaskLet* exittask = __tl->exitto;__tasklet_destroy(__tl);return exittask;}
 struct _TaskLetClass
 {
 	struct TaskLet* (*EntryPoint)(struct TaskLet*);

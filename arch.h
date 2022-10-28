@@ -1,14 +1,7 @@
-/*
- * arch.h
- *
- * Created: 9/2/2016 13:05:49
- *  Author: Nick
- */ 
-
 
 #ifndef ARCH_H_
 #define ARCH_H_
-#include "compiler.h"
+//#include "compiler.h"
 
 #define ASSERT(...)
 

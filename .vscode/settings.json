@@ -1,0 +1,10 @@
+{
+    "cmake.preferredGenerators": [
+        "Unix Makefiles"
+    ],
+    "cmake.sourceDirectory": "/home/nick/src/NSETL",
+    "files.associations": {
+        "linkedlist.h": "c",
+        "stddef.h": "c"
+    }
+}

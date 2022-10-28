@@ -1,11 +1,5 @@
-/*
- * linkedlists.c
- *
- * Created: 9/2/2016 13:07:28
- *  Author: Nick
- */ 
 
-#include <NSETL/linkedlist.h>
+#include "linkedlist.h"
 
 int dllist_isempty(struct DLList* list)
 {

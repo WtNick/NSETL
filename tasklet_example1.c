@@ -1,11 +1,20 @@
-/*
- * Tasklet_Example1.c
- *
- * Created: 8/9/2016 16:50:29
- *  Author: Nick
- */ 
-#include <system.h>
-#include <tasklet.h>
+
+#include <stdio.h>
+//#include "system.h"
+#include "tasklet.h"
+
+static void nop(){}
+#define CPU_IDLE nop
+#define INTERRUPT 
+void __disable_irq(){}
+void __enable_irq(){}
+void SYSTEM_INIT(){}
+void gpio_pinlevel(int l, int a){}
+
+void gpio_toggle_pin(int l)
+{
+	printf("%i ", l);
+}
 
 // local general purpose tasklet wait context
 struct TLWaitContext waitonme;
@@ -58,18 +67,18 @@ TASKLET_END
 
 TASKLET_INSTANCE(blinkytask) heartbeat1;
 TASKLET_INSTANCE(blinkytask) heartbeat2;
-TASKLET_INSTANCE(mytaskA) buttontask1;
+//TASKLET_INSTANCE(mytaskA) buttontask1;
 
 int main(void){
 	SYSTEM_INIT(); // <- initalize board, system, etc... setup timers, irq handlers, etc...
 
 	tasklet_init(&heartbeat1, &blinkytask);
 	tasklet_init(&heartbeat2, &blinkytask);
-	tasklet_init(&buttontask1, &mytaskA);
+	//tasklet_init(&buttontask1, &mytaskA);
 	
-	tasklet_start(&heartbeat1, (void*)LED2);
-	tasklet_start(&heartbeat2, (void*)LED1);
-	tasklet_start(&buttontask1, NULL);
+	tasklet_start(&heartbeat1, (void*)1);
+	tasklet_start(&heartbeat2, (void*)2);
+	//tasklet_start(&buttontask1, NULL);
 	
 	while(1){
 		if (tasklet_process()){ 
